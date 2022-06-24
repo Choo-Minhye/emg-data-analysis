@@ -26,12 +26,12 @@ def notch_filter(x, samplerate, plot=False):
 
     return x_filt
 
-
-def bp_filter(x, low_f, high_f, samplerate, plot=False):
+# 60hz notch 50 HPF 150 LPF
+def bp_filter(x,y, high_pass, low_pass, samplerate, plot=False):
     # x = x - np.mean(x)
 
-    low_cutoff_bp = low_f / (samplerate / 2)
-    high_cutoff_bp = high_f / (samplerate / 2)
+    low_cutoff_bp = high_pass / (samplerate)
+    high_cutoff_bp = low_pass / (samplerate)
 
     [b, a] = signal.butter(5, [low_cutoff_bp, high_cutoff_bp], btype='bandpass')
 
@@ -39,7 +39,7 @@ def bp_filter(x, low_f, high_f, samplerate, plot=False):
 
     if plot:
         t = np.arange(0, len(x) / samplerate, 1 / samplerate)
-        plt.plot(t, x)
+        plt.plot(t, y)
         plt.plot(t, x_filt, 'k')
         plt.autoscale(tight=True)
         plt.title('Band pass Filter')
