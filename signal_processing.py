@@ -6,8 +6,8 @@ import numpy as np
 def notch_filter(x, samplerate, plot=False):
     x = x - np.mean(x)
 
-    high_cutoff_notch = 59 / (samplerate)
-    low_cutoff_notch = 61 / (samplerate)
+    high_cutoff_notch = 59 / (samplerate/2)
+    low_cutoff_notch = 61 / (samplerate/2)
 
     # Band Stop Filter (BSF) or Band Reject Filter
     [b, a] = signal.butter(4, [high_cutoff_notch, low_cutoff_notch], btype='stop')
