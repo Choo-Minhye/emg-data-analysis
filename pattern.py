@@ -4,11 +4,12 @@ from feature_extraction import features_estimation
 
 # Load data from Excel file
 signal_path = 'data/emg.xlsx'
+# signal_path = 'data/220624_EMG_3.xlsx'
 emg_signal = pd.read_excel(signal_path).values
-channel_name = 'Right Hand'
+channel_name = 'Raw EMG Data'
 
-# Sampling Frequency of 2000 (2000 Samples per second)
-sampling_frequency = 2e3
+# Sampling Frequency of 1000 (2000 Samples per second)
+sampling_frequency = 1e3
 frame = 500
 step = 250
 
@@ -20,9 +21,5 @@ emg_signal = emg_signal.reshape((emg_signal.size,))
 filtered_signal = notch_filter(emg_signal, sampling_frequency,
                                True)
 # Band Pass Filter (BPF)
-filtered_signal = bp_filter(filtered_signal, 10, 500,
+filtered_signal = bp_filter(filtered_signal, 10, 20,
                             sampling_frequency, True)
-
-# EMG Feature Extraction
-emg_features, features_names = features_estimation(filtered_signal, channel_name,
-                                                   sampling_frequency, frame, step)
